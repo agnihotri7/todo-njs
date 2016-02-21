@@ -1,0 +1,98 @@
+<html>
+<head>
+    <title>Create</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap-datetimepicker.css"> <!-- load fontawesome -->
+    <style>
+        body{ padding-top:80px; }
+    </style>
+    <style type="text/css">
+        #map {
+          width: 540px;
+          height: 400px;
+    }
+    </style>
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="/javascripts/gmaps.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/moment.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap-datetimepicker.js"></script>
+
+</head>
+<body>
+<div class="container">
+
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1>Create a TODO</h1>
+    <!-- show any messages that come back with authentication -->
+    <% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    <!--  FORM -->
+    <form action="/todo/add" method="post">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name">
+        </div>
+            <div class="form-group">
+            <label>Due Date-Time</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" name="dew_date"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label>location</label><input id="location_address" type='text' class="form-control" name="address" />
+            </br>
+            <div id="map"></div>
+        </div>
+
+        <button type="submit" class="btn btn-warning btn-lg">Create</button>
+    </form>
+
+    <hr>
+    <script>
+      var map = new GMaps({
+        el: '#map',
+        lat: 28.667766,
+        lng: 77.185921,
+        click: function(event) {
+                map.removeMarkers();
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
+                map.addMarker({
+                    lat: lat,
+                    lng: lng,
+                    draggable: true,
+                });
+                reverseGeocoder(lat, lng)
+            }
+      });
+      function reverseGeocoder(lat, lng) {
+          var geocoder = new google.maps.Geocoder();
+          var point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+          geocoder.geocode({"latLng" : point }, function(data, status) {
+              if (status == google.maps.GeocoderStatus.OK && data[0]) {
+                  var add = document.getElementById('location_address');
+                  add.value = data[0].formatted_address;
+              } else {
+                  console.log("Error: " + status);
+              }
+          });
+      };
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
+</div>
+
+</div>
+</body>
+</html>

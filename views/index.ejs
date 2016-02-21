@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <style>
+        body{ padding-top:80px; }
+    </style>
+</head>
+<body>
+<div class="container">
+        <div class="jumbotron text-center">
+        <h2><b>List of todo</b></h2>
+            <a href="/todo/create">crate new todo</a>|<a href="/logout">logout</a>
+            <% todos.forEach(function(todo) { %>
+                <b><p>name: </b><%= todo.name %> </p>
+                <p><b>location:</b> <%= todo.location %> </p>
+                <p> <b>due date:</b> <%= todo.dew_date %> <a href="/todo/edit/<%= todo._id %>">edit</a> </p>
+                <p>----------------------------------------------------------------------------------------------------</p>
+            <% }); %>
+        </div>
+</div>
+</body>
+</html>
