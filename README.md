@@ -1,6 +1,8 @@
 TODO-NodeJs
 =============
-This is an example of create, read, update, delete web application built with Express.js v4.8.1, and Mongoose & MongoDB.
+TODO list in node js. You can create, update, complete and delete a todo item.
+You can add location and time on a TODO.(Location can be added using Google Map.)
+The web application built with Express.js v4.8.1, and Mongoose & MongoDB.
 
 ### Node-Login is built on top of the following libraries :
 
